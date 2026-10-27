@@ -30,7 +30,9 @@ export function revisionStreak(attempts: Attempt[], now: Date) {
   return count;
 }
 export function mastery(topic: string, attempts: Attempt[], bank: Question[]) {
-  const relevant = attempts.filter((a) => bank.find((q) => q.id === a.questionId)?.topic === topic);
+  const relevant = attempts.filter(
+    (a) => a.selected >= 0 && bank.find((q) => q.id === a.questionId)?.topic === topic,
+  );
   const correct = relevant.filter((a) => a.correct).length;
   // Beta(2,2) prior keeps small samples uncertain.
   return {

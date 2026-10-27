@@ -102,7 +102,7 @@ export function PerformanceChart({ compact = false }: { compact?: boolean }) {
         <TrendingUp size={15} />
         <span>
           {state.attempts.length
-            ? `Your own practice accuracy is ${score(state.attempts).accuracy}% across ${state.attempts.length} answers.`
+            ? `Your own accuracy is ${score(state.attempts).accuracy}% across ${state.attempts.length} practice and rehearsal questions.`
             : 'Consistency compounds. Keep showing up for your future self.'}
         </span>
       </div>
@@ -114,6 +114,8 @@ export function Dashboard() {
   const { state, setState, notify } = useDemo();
   const completed = state.tasks.filter((t) => t.done).length;
   const actual = score(state.attempts);
+  const answered = state.attempts.filter((a) => a.selected >= 0).length;
+  const streak = revisionStreak(state.attempts, new Date(today));
   const days = Math.max(
     0,
     Math.ceil((new Date(state.profile.examDate).getTime() - today) / 86400000),
@@ -122,7 +124,7 @@ export function Dashboard() {
   const stats = [
     {
       label: 'Questions answered',
-      value: state.attempts.length ? String(state.attempts.length) : '248',
+      value: state.attempts.length ? String(answered) : '248',
       detail: state.attempts.length ? 'Your practice activity' : '+32 this week',
       icon: BookOpen,
       spark: [6, 10, 7, 16, 13, 20, 17, 25, 22, 30],
@@ -130,7 +132,7 @@ export function Dashboard() {
     {
       label: 'Practice accuracy',
       value: state.attempts.length ? `${actual.accuracy}%` : '78%',
-      detail: state.attempts.length ? 'Across your answers' : '+12% this month',
+      detail: state.attempts.length ? 'Including unanswered in exams' : '+12% this month',
       icon: Target,
       spark: [7, 6, 12, 10, 17, 15, 20, 18, 24, 29],
     },
@@ -145,9 +147,7 @@ export function Dashboard() {
     },
     {
       label: 'Study streak',
-      value: state.attempts.length
-        ? `${revisionStreak(state.attempts, new Date(today))} days`
-        : '7 days',
+      value: state.attempts.length ? `${streak} ${streak === 1 ? 'day' : 'days'}` : '7 days',
       detail: state.attempts.length ? 'Consecutive practice days' : 'A week of showing up',
       icon: Flame,
       spark: [5, 9, 9, 15, 15, 21, 21, 27, 27, 30],

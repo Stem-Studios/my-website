@@ -13,7 +13,11 @@ export function Analytics() {
     ...new Set(questions.filter((q) => q.exam === state.profile.exam).map((q) => q.topic)),
   ];
   const stats = [
-    { icon: BookOpen, label: 'Questions answered', value: result.total },
+    {
+      icon: BookOpen,
+      label: 'Questions answered',
+      value: state.attempts.filter((a) => a.selected >= 0).length,
+    },
     { icon: Target, label: 'Practice accuracy', value: result.total ? `${result.accuracy}%` : '—' },
     {
       icon: Clock3,

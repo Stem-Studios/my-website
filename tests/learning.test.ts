@@ -90,10 +90,14 @@ describe('timers, uncertainty, storage and validation boundaries', () => {
     expect(remainingSeconds(10000, 11000)).toBe(0);
   });
   it('does not call one correct answer mastery', () => {
-    const attempt = { questionId: 'tmua-001', correct: true } as Attempt;
+    const attempt = { questionId: 'tmua-001', correct: true, selected: 1 } as Attempt;
     const m = mastery('Algebra', [attempt], questions);
     expect(m.percent).toBe(60);
     expect(m.confidence).toBe('Insufficient data');
+  });
+  it('does not treat an unanswered question as evidence of topic understanding', () => {
+    const attempt = { questionId: 'tmua-001', correct: false, selected: -1 } as Attempt;
+    expect(mastery('Algebra', [attempt], questions).count).toBe(0);
   });
   it('recovers safely from corrupt or wrong-version local data', () => {
     expect(loadDemo('broken').attempts).toEqual([]);
