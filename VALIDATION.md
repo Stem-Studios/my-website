@@ -29,5 +29,6 @@ The optional Supabase migration and RLS policies were not applied to a live data
 - Mobile dashboard checked at 390 × 844 with no horizontal overflow; rank summary added above the main quest for small screens.
 - Practice answer submission, worked solution and results checked through the UI. Repeating an already-correct question correctly displayed +0 XP.
 - 15 unit tests pass, including XP effort/first-correct rules, replay prevention, rank thresholds and daily rollover. TypeScript check passes.
+- Production static build succeeds for all 22 pages. CSS celebrations and Motion components respect reduced-motion preferences.
 - XP and achievement data are derived from existing local attempts, so existing progress remains compatible. League opponents and positions are explicitly marked as illustrative; live competitive ratings remain disabled.
 

@@ -12,6 +12,7 @@ import { initialState } from '@/data/demo';
 import type { DemoState } from '@/domain/types';
 import { loadDemo, STORAGE_KEY } from '@/services/storage';
 import { Check, X } from 'lucide-react';
+import { MotionConfig } from 'motion/react';
 const Context = createContext<{
   state: DemoState;
   setState: Dispatch<SetStateAction<DemoState>>;
@@ -51,7 +52,7 @@ export function DemoProvider({ children }: { children: ReactNode }) {
   }, [toast]);
   return (
     <Context.Provider value={{ state, setState, notify: setToast, ready }}>
-      {children}
+      <MotionConfig reducedMotion="user">{children}</MotionConfig>
       {toast && (
         <div role="status" className="toast">
           <Check size={17} />
