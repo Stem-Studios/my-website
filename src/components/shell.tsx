@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { useDemo } from './provider';
 import { questions } from '@/data/questions';
+import { progression } from '@/domain/progression';
+import { RankBadge } from './progression';
 const learning = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { href: '/practice', label: 'Practice', icon: BookOpen },
@@ -53,6 +55,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const [query, setQuery] = useState('');
   const [examMenu, setExamMenu] = useState(false);
   const [help, setHelp] = useState(false);
+  const progress = progression(state.attempts);
+  const focused = pathname.startsWith('/practice/demo') || pathname.startsWith('/mock-exams/demo');
   useEffect(() => {
     const listener = (e: KeyboardEvent) => {
       if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
@@ -81,15 +85,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <Link href="/" className="brand-link" aria-label="Stem Studios home">
           <Brand />
         </Link>
-        <div className="workspace-switch">
+        <Link href="/ranked" className="workspace-switch">
           <span className="workspace-symbol">
-            <GraduationCap size={19} />
+            <RankBadge rank={progress.rank.name} small />
           </span>
           <div>
-            Personal workspace<small>Admissions, reimagined.</small>
+            {progress.rank.name} scholar<small>{progress.xp} XP · Your study journey</small>
           </div>
           <ChevronDown size={13} />
-        </div>
+        </Link>
         <div className="nav-group-label">YOUR WORKSPACE</div>
         <nav aria-label="Main navigation">
           {learning.map((n) => (
@@ -163,6 +167,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <strong>{current}</strong>
           </div>
           <div className="topbar-actions">
+            {!focused && (
+              <Link className="header-xp" href="/ranked">
+                <Sparkles size={15} />
+                {progress.xp} XP
+              </Link>
+            )}
             <button
               className="search-trigger"
               aria-label="Search workspace"

@@ -23,3 +23,11 @@ Browser QA used the running Next.js application through the Codex browser:
 Playwright journey specifications are provided in `tests/e2e/` for future CI. They were not executed by the command-line Playwright runner in this environment; the above browser checks were interactive QA.
 
 The optional Supabase migration and RLS policies were not applied to a live database. External AI, genuine authentication, calibrated official exam formats and competitive integrity are not active integrations. Their behaviour is not claimed as tested.
+# Warm gamified redesign
+
+- Shared warm off-white/orange theme across routes; desktop dashboard, landing, resources, leaderboard and rank trail visually checked in the browser.
+- Mobile dashboard checked at 390 × 844 with no horizontal overflow; rank summary added above the main quest for small screens.
+- Practice answer submission, worked solution and results checked through the UI. Repeating an already-correct question correctly displayed +0 XP.
+- 15 unit tests pass, including XP effort/first-correct rules, replay prevention, rank thresholds and daily rollover. TypeScript check passes.
+- XP and achievement data are derived from existing local attempts, so existing progress remains compatible. League opponents and positions are explicitly marked as illustrative; live competitive ratings remain disabled.
+

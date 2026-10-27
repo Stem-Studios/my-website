@@ -26,6 +26,7 @@ import { demoExamFormat } from '@/data/exam-config';
 import { adaptiveQuestions, remainingSeconds, score, validateAnswer } from '@/domain/learning';
 import type { Attempt, Question } from '@/domain/types';
 import { demoTutor } from '@/services/tutor';
+import { SessionReward } from '@/components/progression';
 export function useStartSession() {
   const { setState } = useDemo();
   const router = useRouter();
@@ -628,6 +629,7 @@ export function Results() {
           </Link>
         }
       />
+      <SessionReward sessionId={session.id} />
       <div className="results-summary">
         <section className="panel result-main">
           <CircleCheck size={30} />

@@ -37,7 +37,7 @@ Playwright journey specifications are in `tests/e2e/`. On a development machine 
 - Original topic guides, resource search, personal external resources, progress export and local reset.
 - Authored tutor examples. No generative AI is called.
 
-Ranked, leaderboard and live AI pages are honest previews. No live opponents, secure ratings, score calibration, cloud storage, subscription system or question-generation service is implemented. Dashboard readiness and historical statistics are labelled samples, never predictions of a real score. Practice activity replaces the four sample momentum cards after your first answer.
+Study XP, six progression ranks, daily quests and question milestones work from saved local attempts. A new question earns 10 XP for an attempt plus 20 XP on its first correct answer; repeats cannot farm XP. The leaderboard uses explicitly labelled illustrative students alongside your actual local XP. There are no live opponents, secure competitive ratings, score calibration, cloud storage, subscription system or question-generation service. Dashboard readiness and historical statistics remain labelled samples, never predictions of a real score. Momentum cards show actual activity, including honest zero states.
 
 ## Architecture & extension points
 
@@ -57,7 +57,7 @@ Ranked, leaderboard and live AI pages are honest previews. No live opponents, se
 | `migrations/`             | Optional future Supabase schema and RLS policies               |
 | `scripts/seed.mjs`        | Generates optional SQL from the original question fixtures     |
 
-Branding lives in the CSS custom properties at the top of `src/app/globals.css`. The `Brand` component is in `src/components/shell.tsx`. Questions and resources remain separate from layout components.
+The warm visual identity and shared component styling live in `src/app/redesign.css`, loaded after the base layouts in `globals.css`. The `Brand` component is in `src/components/shell.tsx`. XP rules and ranks live in the pure `src/domain/progression.ts` module; their shared UI lives in `src/components/progression.tsx`. Questions and resources remain separate from layout components. Adding questions automatically expands the available XP pool.
 
 The current static route set is enumerated in `src/app/[...path]/page.tsx`. `/practice/demo`, `/mock-exams/demo` and `/results/demo` render the active local session; the actual session UUID lives in persisted state. To support arbitrary shareable session URLs, replace the static route adapter with real dynamic App Router routes and an authenticated repository. Historical local attempts remain available to analytics, but the results route shows the most recent session only.
 

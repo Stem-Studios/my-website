@@ -1,14 +1,17 @@
 'use client';
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowRight, Download, ShieldCheck, Trophy, Swords } from 'lucide-react';
+import { ArrowRight, Download, ShieldCheck } from 'lucide-react';
 import { useDemo } from '@/components/provider';
+import { RankCard, RankTrail, Leaderboard } from '@/components/progression';
+import { progression } from '@/domain/progression';
 import { initialState } from '@/data/demo';
 import { Badge, PageHeading } from '@/components/shared';
 import { Button } from '@/components/ui/button';
 export function Settings({ profile = false }: { profile?: boolean }) {
   const { state, setState, notify } = useDemo();
   const [confirm, setConfirm] = useState(false);
+  const progress = progression(state.attempts);
   function download() {
     const blob = new Blob([JSON.stringify(state, null, 2)], { type: 'application/json' });
     const url = URL.createObjectURL(blob);
@@ -38,7 +41,9 @@ export function Settings({ profile = false }: { profile?: boolean }) {
               <h2>{state.profile.name}</h2>
               <p>Local demo account · {state.profile.exam}</p>
             </div>
-            <Badge>Demo mode</Badge>
+            <Badge>
+              {progress.rank.name} · {progress.xp} XP
+            </Badge>
           </div>
           <div className="setting-row">
             <div>
@@ -133,49 +138,34 @@ export function Competitive({ leaderboard = false }: { leaderboard?: boolean }) 
   return (
     <>
       <PageHeading
-        eyebrow="CHALLENGE YOURSELF, THOUGHTFULLY"
+        eyebrow="LEARN. GROW. LEVEL UP."
         title={
-          leaderboard ? 'Room for a little friendly ambition.' : 'A new way to raise your game.'
+          leaderboard
+            ? 'A little competition. A lot of motivation.'
+            : 'Your effort deserves a rank.'
         }
-        description="A preview of where the platform is headed. Your learning always comes first."
-        action={<Badge tone="amber">Preview · not active</Badge>}
+        description={
+          leaderboard
+            ? 'Find your next milestone in our sample study league.'
+            : 'Every question builds knowledge. Every new win moves you forward.'
+        }
+        action={<Badge>Study progression</Badge>}
       />
-      <section className="panel competitive-preview">
-        <div className="competitive-symbol">
-          {leaderboard ? <Trophy size={44} /> : <Swords size={44} />}
+      {leaderboard ? (
+        <Leaderboard />
+      ) : (
+        <div className="ranks-layout">
+          <RankCard />
+          <RankTrail />
         </div>
-        <Badge>IN DEVELOPMENT</Badge>
-        <h2>{leaderboard ? 'Better, together.' : 'Make your next move count.'}</h2>
+      )}
+      <div className="info-box">
+        <ShieldCheck size={19} />
         <p>
-          Future asynchronous challenges will compare equivalent, calibrated question sets. Rankings
-          will reward demonstrated ability, with revision XP kept separate.
+          Study XP works locally. Live competitive matches and verified global ratings are not
+          enabled.
         </p>
-        <div className="division-list">
-          {['Bronze', 'Silver', 'Gold', 'Platinum', 'Diamond', 'Master'].map((d, i) => (
-            <div key={d}>
-              <span
-                style={{
-                  color: ['#c59472', '#a9afbf', '#d6ba77', '#8ebfb9', '#8ba8e7', '#b59af7'][i],
-                }}
-              >
-                ◇
-              </span>
-              <small>{d}</small>
-            </div>
-          ))}
-        </div>
-        <div className="info-box">
-          <ShieldCheck size={19} />
-          <p>
-            There are no live opponents or real ratings in this demo. Secure scoring, integrity
-            checks and calibrated sets are required before competition is enabled.
-          </p>
-        </div>
-        <Link href="/practice" className="button button-primary">
-          Build your foundations
-          <ArrowRight size={16} />
-        </Link>
-      </section>
+      </div>
     </>
   );
 }

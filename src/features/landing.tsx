@@ -41,25 +41,27 @@ export function Landing({ features = false }: { features?: boolean }) {
         <section className="landing-hero">
           <div className="landing-kicker">
             <span />
-            FOR THE NEXT CHAPTER OF YOU <ChevronRight size={12} />
+            YOUR AMBITION. MEET YOUR MOMENTUM. <ChevronRight size={12} />
           </div>
           <h1>
             {features ? (
               'Built around how you grow.'
             ) : (
               <>
-                Your potential.
-                <br />A clearer <span>path.</span>
+                Study. Level up.
+                <br />
+                Go <span>further.</span>
               </>
             )}
           </h1>
           <p>
-            Purposeful practice. A plan that moves with you.
-            <br />A focused workspace for your TMUA & ESAT journey.
+            Big ambitions start with small daily wins.
+            <br />
+            Your TMUA & ESAT workspace for practice, progress and your next rank.
           </p>
           <div className="landing-actions">
             <Link href="/onboarding" className="button button-light">
-              Find your starting point
+              Start your study journey
               <ArrowRight size={17} />
             </Link>
             <Link href="/dashboard" className="button button-ghost">
@@ -200,8 +202,8 @@ export function Landing({ features = false }: { features?: boolean }) {
               },
               {
                 icon: TrendingUp,
-                title: 'See the bigger picture.',
-                text: 'Keep your effort in perspective with honest topic estimates and a clear view of your progress.',
+                title: 'Earn your next level.',
+                text: 'Collect XP from new question attempts, unlock study ranks and celebrate real progress. Explore a clearly labelled sample league.',
               },
             ].map((f) => (
               <article key={f.title}>

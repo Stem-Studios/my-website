@@ -32,6 +32,13 @@ import { useDemo } from '@/components/provider';
 import { Badge, Meter, PanelHeading, PageHeading } from '@/components/shared';
 import { sampleTopics, sampleTrend } from '@/data/demo';
 import { score, revisionStreak } from '@/domain/learning';
+import {
+  RankCard,
+  DailyGoals,
+  Leaderboard,
+  RecentActivity,
+  MobileRankSummary,
+} from '@/components/progression';
 export function PerformanceChart({ compact = false }: { compact?: boolean }) {
   const { state } = useDemo();
   const [period, setPeriod] = useState('8 weeks');
@@ -58,16 +65,16 @@ export function PerformanceChart({ compact = false }: { compact?: boolean }) {
           <AreaChart data={data} margin={{ top: 18, right: 12, left: -25, bottom: 0 }}>
             <defs>
               <linearGradient id="accuracy-fill" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#9772f8" stopOpacity={0.25} />
-                <stop offset="100%" stopColor="#9772f8" stopOpacity={0} />
+                <stop offset="0%" stopColor="#ff7a30" stopOpacity={0.25} />
+                <stop offset="100%" stopColor="#ff7a30" stopOpacity={0} />
               </linearGradient>
             </defs>
-            <CartesianGrid stroke="#24262f" vertical={false} strokeDasharray="3 5" />
+            <CartesianGrid stroke="#eae5de" vertical={false} strokeDasharray="3 5" />
             <XAxis
               dataKey="week"
               tickLine={false}
               axisLine={false}
-              tick={{ fill: '#73798a', fontSize: 10 }}
+              tick={{ fill: '#8b7b6e', fontSize: 10 }}
               dy={9}
             />
             <YAxis
@@ -76,12 +83,12 @@ export function PerformanceChart({ compact = false }: { compact?: boolean }) {
               tickFormatter={(v) => `${v}%`}
               tickLine={false}
               axisLine={false}
-              tick={{ fill: '#73798a', fontSize: 10 }}
+              tick={{ fill: '#8b7b6e', fontSize: 10 }}
             />
             <Tooltip
               contentStyle={{
-                background: '#191b26',
-                border: '1px solid #363346',
+                background: '#ffffff',
+                border: '1px solid #eae5de',
                 borderRadius: 10,
                 fontSize: 12,
               }}
@@ -90,10 +97,10 @@ export function PerformanceChart({ compact = false }: { compact?: boolean }) {
             <Area
               type="monotone"
               dataKey="accuracy"
-              stroke="#a78bfa"
+              stroke="#f27a32"
               strokeWidth={2.5}
               fill="url(#accuracy-fill)"
-              activeDot={{ r: 5, stroke: '#c9b6ff', strokeWidth: 3 }}
+              activeDot={{ r: 5, stroke: '#ffb27c', strokeWidth: 3 }}
             />
           </AreaChart>
         </ResponsiveContainer>
@@ -124,15 +131,17 @@ export function Dashboard() {
   const stats = [
     {
       label: 'Questions answered',
-      value: state.attempts.length ? String(answered) : '248',
-      detail: state.attempts.length ? 'Your practice activity' : '+32 this week',
+      value: String(answered),
+      detail: 'Your practice activity',
       icon: BookOpen,
       spark: [6, 10, 7, 16, 13, 20, 17, 25, 22, 30],
     },
     {
       label: 'Practice accuracy',
-      value: state.attempts.length ? `${actual.accuracy}%` : '78%',
-      detail: state.attempts.length ? 'Including unanswered in exams' : '+12% this month',
+      value: state.attempts.length ? `${actual.accuracy}%` : '—',
+      detail: state.attempts.length
+        ? 'Including unanswered in exams'
+        : 'Your next answer starts here',
       icon: Target,
       spark: [7, 6, 12, 10, 17, 15, 20, 18, 24, 29],
     },
@@ -140,15 +149,15 @@ export function Dashboard() {
       label: 'Revision time',
       value: state.attempts.length
         ? `${Math.round(state.attempts.reduce((a, b) => a + b.seconds, 0) / 60)}m`
-        : '18.5h',
-      detail: state.attempts.length ? 'Time spent practicing' : 'of 24h monthly goal',
+        : '0m',
+      detail: 'Time spent practicing',
       icon: Clock3,
       spark: [10, 8, 12, 14, 12, 20, 18, 21, 24, 27],
     },
     {
       label: 'Study streak',
-      value: state.attempts.length ? `${streak} ${streak === 1 ? 'day' : 'days'}` : '7 days',
-      detail: state.attempts.length ? 'Consecutive practice days' : 'A week of showing up',
+      value: `${streak} ${streak === 1 ? 'day' : 'days'}`,
+      detail: 'Consecutive practice days',
       icon: Flame,
       spark: [5, 9, 9, 15, 15, 21, 21, 27, 27, 30],
     },
@@ -161,9 +170,9 @@ export function Dashboard() {
     >
       <div className="dashboard-heading">
         <PageHeading
-          eyebrow="YOUR POTENTIAL, IN PROGRESS"
-          title={`Keep moving forward, ${state.profile.name}.`}
-          description="Small steps today. Extraordinary possibilities tomorrow."
+          eyebrow="YOUR NEXT LEVEL STARTS HERE"
+          title={`Ready to level up, ${state.profile.name}?`}
+          description="Build your knowledge. Earn your progress. Make today count."
         />
         <Link className="button button-outline date-button" href="/onboarding">
           <CalendarDays size={15} />
@@ -171,17 +180,19 @@ export function Dashboard() {
           <ChevronRight size={14} />
         </Link>
       </div>
+      <MobileRankSummary />
       <div className="dashboard-columns">
         <div className="dashboard-primary">
           <section className="focus-banner">
             <div className="focus-banner-content">
               <span className="micro-label">
                 <span />
-                YOUR NEXT BEST STEP
+                TODAY’S MAIN QUEST
               </span>
               <h2>
-                A little focus.
-                <br />A lot of possibility.
+                Big goals.
+                <br />
+                Small daily wins.
               </h2>
               <p>
                 {state.profile.exam === 'TMUA'
@@ -191,7 +202,7 @@ export function Dashboard() {
                 Your next breakthrough is one question away.
               </p>
               <Link href="/practice" className="button button-light">
-                Start a focused session
+                Start study session
                 <ArrowRight size={16} />
               </Link>
               <span className="banner-meta">
@@ -204,20 +215,21 @@ export function Dashboard() {
               <div className="orbit orbit-two" />
               <div className="orbit orbit-three" />
               <div className="orbit-core">
-                <Focus size={42} strokeWidth={1} />
+                <Zap size={42} strokeWidth={1.7} />
               </div>
               <span className="orbit-dot dot-one" />
               <span className="orbit-dot dot-two" />
               <span className="orbit-star star-one">✦</span>
               <span className="orbit-star star-two">✧</span>
               <div className="orbit-label">
-                <Sparkles size={12} />A clearer path ahead
+                <Sparkles size={12} />
+                Up to 30 XP per question
               </div>
             </div>
           </section>
           <div className="stats-heading">
             <h2>Your momentum</h2>
-            <Badge tone="muted">{state.attempts.length ? 'Your activity' : 'Demo data'}</Badge>
+            <Badge tone="muted">Your activity</Badge>
             <Link href="/analytics">
               Explore analytics
               <ArrowUpRight size={13} />
@@ -236,7 +248,7 @@ export function Dashboard() {
                     <polyline
                       points={s.spark.map((v, i) => `${i * 6},${34 - v}`).join(' ')}
                       fill="none"
-                      stroke={s.icon === Flame ? '#d6ad77' : '#9474dc'}
+                      stroke={s.icon === Flame ? '#d6ad77' : '#dd762f'}
                       strokeWidth="1.5"
                     />
                   </svg>
@@ -247,6 +259,8 @@ export function Dashboard() {
               </div>
             ))}
           </div>
+          <DailyGoals />
+          <RecentActivity />
           <PerformanceChart />
           <section className="panel daily-panel">
             <PanelHeading
@@ -308,6 +322,8 @@ export function Dashboard() {
           </section>
         </div>
         <aside className="dashboard-secondary">
+          <RankCard />
+          <Leaderboard compact />
           <section className="panel journey-panel">
             <PanelHeading title="The bigger picture" />
             <div className="journey-caption">YOUR {state.profile.exam} JOURNEY</div>

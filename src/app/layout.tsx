@@ -3,6 +3,7 @@ import { DemoProvider } from '@/components/provider';
 import '@fontsource-variable/inter';
 import 'katex/dist/katex.min.css';
 import './globals.css';
+import './redesign.css';
 export const metadata: Metadata = {
   icons: { icon: '/icon.svg' },
   title: 'Stem Studios — A clearer path to your potential',
