@@ -41,9 +41,6 @@ const explore = [
 export function Brand() {
   return (
     <span className="brand">
-      <span className="brand-icon" aria-hidden="true">
-        S
-      </span>
       <span className="brand-name">Stem Studios</span>
     </span>
   );
