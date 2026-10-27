@@ -7,3 +7,18 @@ out/
 test-results/
 playwright-report/
 .DS_Store
+
+# Local credentials, private keys and database backups
+*.pem
+*.key
+*.p12
+*.pfx
+credentials.json
+secrets.json
+secrets.*
+.secrets/
+.aws/
+*.dump
+*.sql.gz
+*.sqlite
+*.sqlite3
