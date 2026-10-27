@@ -100,7 +100,7 @@ export function Resources() {
               </a>
             )}
             <small>
-              {'body' in r ? 'Axiom original · demo content' : 'Added by you · unverified'}
+              {'body' in r ? 'Stem Studios original · demo content' : 'Added by you · unverified'}
             </small>
           </article>
         ))}
@@ -144,7 +144,7 @@ export function Resources() {
             <Badge>{reading.topic}</Badge>
             <h2>{reading.title}</h2>
             <p>{reading.body}</p>
-            <small>Axiom original · Educational demo note</small>
+            <small>Stem Studios original · Educational demo note</small>
           </section>
         </div>
       )}

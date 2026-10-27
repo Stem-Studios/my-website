@@ -1,4 +1,4 @@
-# Axiom — TMUA & ESAT revision
+# Stem Studios — TMUA & ESAT revision
 
 A working, key-free revision platform foundation. Built with Next.js App Router, strict TypeScript, Tailwind CSS, shadcn-style Radix primitives, Lucide, Motion, Recharts, KaTeX and Zod. PostgreSQL models use Drizzle.
 

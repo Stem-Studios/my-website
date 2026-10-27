@@ -41,10 +41,10 @@ const explore = [
 export function Brand() {
   return (
     <span className="brand">
-      <span className="brand-icon">
-        a<span>·</span>
+      <span className="brand-icon" aria-hidden="true">
+        S
       </span>
-      axiom<span className="brand-dot">.</span>
+      <span className="brand-name">Stem Studios</span>
     </span>
   );
 }
@@ -81,7 +81,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         onClick={() => setMobile(false)}
       />
       <aside className={`sidebar ${mobile ? 'open' : ''}`}>
-        <Link href="/" className="brand-link" aria-label="Axiom home">
+        <Link href="/" className="brand-link" aria-label="Stem Studios home">
           <Brand />
         </Link>
         <div className="workspace-switch">
@@ -183,7 +183,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
                 onClick={() => setExamMenu(!examMenu)}
               >
                 <span className="status-dot" />
-                {state.profile.exam} preparation
+                {state.profile.exam}
                 <ChevronDown size={13} />
               </button>
               {examMenu && (

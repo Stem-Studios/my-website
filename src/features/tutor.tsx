@@ -47,7 +47,7 @@ export function Tutor() {
               <Sparkles size={19} />
             </span>
             <div>
-              <h3>Axiom study companion</h3>
+              <h3>Stem Studios study companion</h3>
               <p>Example conversations · authored responses</p>
             </div>
             <Button variant="ghost" size="sm" onClick={() => setMessages([])}>

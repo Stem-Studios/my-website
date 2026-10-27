@@ -377,8 +377,8 @@ code {
 }
 .brand {
   font-weight: 600;
-  font-size: 27px;
-  letter-spacing: -1.4px;
+  font-size: 22px;
+  letter-spacing: -0.8px;
   display: inline-flex;
   align-items: center;
   line-height: 1;
@@ -396,23 +396,24 @@ code {
   height: 29px;
   text-align: center;
   border-radius: 8px 9px 8px 4px;
-  font-size: 32px;
-  line-height: 23px;
-  letter-spacing: -2px;
+  font-size: 25px;
+  line-height: 29px;
+  letter-spacing: -1px;
   box-shadow: 0 0 18px #a78bfa16;
 }
-.brand-icon > span {
-  font-style: normal;
-  position: relative;
-  left: -2px;
-  color: #231630;
+.brand-icon {
+  flex-shrink: 0;
 }
-.brand-dot {
-  color: #b79be9;
-  margin-left: -10px;
+.brand-name {
+  white-space: nowrap;
+}
+.sidebar .brand {
+  font-size: 20px;
+  letter-spacing: -0.7px;
+  gap: 8px;
 }
 .brand-link {
-  padding: 0 12px;
+  padding: 0 7px;
 }
 .workspace-switch {
   display: flex;
@@ -642,7 +643,8 @@ code {
   align-items: center;
   gap: 9px;
   border: 0;
-  font-size: 10px;
+  font-size: 13px;
+  font-weight: 500;
   color: #c9cbd4;
   padding: 8px 0;
 }
@@ -3334,14 +3336,19 @@ tbody > tr:last-child td {
   font-size: 9px;
 }
 .mini-nav > .brand {
-  font-size: 22px;
+  font-size: 12px;
+  gap: 5px;
+  letter-spacing: -0.45px;
   color: #ddd2e6;
   margin-bottom: 19px;
 }
 .mini-nav > .brand > .brand-icon {
-  transform: scale(0.8);
-  margin-left: -4px;
-  margin-right: -5px;
+  width: 22px;
+  height: 23px;
+  font-size: 21px;
+  line-height: 23px;
+  transform: none;
+  margin: 0;
 }
 .mini-nav > div {
   display: flex;
@@ -4027,7 +4034,7 @@ tbody > tr:last-child td {
     margin-top: 35px;
   }
   .sidebar .brand {
-    font-size: 25px;
+    font-size: 19px;
   }
   .nav-item {
     font-size: 10px;
@@ -4060,7 +4067,7 @@ tbody > tr:last-child td {
     gap: 10px;
   }
   .exam-button {
-    font-size: 9px;
+    font-size: 12px;
     gap: 5px;
   }
   .topbar-actions {
@@ -4464,7 +4471,7 @@ tbody > tr:last-child td {
     gap: 12px;
   }
   .exam-button {
-    font-size: 9px;
+    font-size: 12px;
   }
   .help-button {
     display: none;

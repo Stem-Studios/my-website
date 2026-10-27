@@ -21,7 +21,7 @@ export function Landing({ features = false }: { features?: boolean }) {
   return (
     <div className="landing">
       <header className="landing-nav">
-        <Link href="/" aria-label="Axiom home">
+        <Link href="/" aria-label="Stem Studios home">
           <Brand />
         </Link>
         <nav>
@@ -98,7 +98,7 @@ export function Landing({ features = false }: { features?: boolean }) {
             <span>YOUR POTENTIAL, IN PROGRESS</span>
             <span>
               <span className="status-dot" />
-              axiom workspace
+              Stem Studios workspace
             </span>
           </div>
           <div className="landing-dashboard-mini">
@@ -234,7 +234,7 @@ export function DemoLogin({ signup = false }: { signup?: boolean }) {
   const { state } = useDemo();
   return (
     <div className="auth-page">
-      <Link href="/" aria-label="Axiom home">
+      <Link href="/" aria-label="Stem Studios home">
         <Brand />
       </Link>
       <section className="panel auth-panel">

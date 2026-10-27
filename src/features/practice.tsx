@@ -170,7 +170,7 @@ export function PracticeSetup({ mock = false }: { mock?: boolean }) {
         </section>
         <aside>
           <div className="panel practice-aside">
-            <Badge>THE AXIOM APPROACH</Badge>
+            <Badge>THE STEM STUDIOS APPROACH</Badge>
             <h2>
               Understanding over
               <br />

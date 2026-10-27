@@ -14,7 +14,7 @@ export function Settings({ profile = false }: { profile?: boolean }) {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'axiom-progress.json';
+    a.download = 'stem-studios-progress.json';
     a.click();
     URL.revokeObjectURL(url);
     notify('Your progress export is ready.');

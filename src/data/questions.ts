@@ -308,7 +308,7 @@ const seeds: Seed[] = [
 ];
 export const questions: Question[] = seeds.map((q) => ({
   ...q,
-  source: 'Axiom original · demo collection',
+  source: 'Stem Studios original · demo collection',
   verified: true,
   tags: [q.topic, q.subtopic],
   version: 1,
