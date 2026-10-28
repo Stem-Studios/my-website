@@ -4,7 +4,9 @@ A working, key-free revision platform foundation. Built with Next.js App Router,
 
 ## Run locally
 
-Requires Node 24+ and pnpm 11 (Node 24 enables the optional TypeScript seed script). No `.env` file, Supabase project or API key is required.
+Deployment target: Netlify. Exact settings and authentication setup are in [NETLIFY.md](./NETLIFY.md).
+
+Requires Node 24+ and pnpm 11 (Node 24 enables the optional TypeScript seed script). Supabase session refresh uses the public connection settings in ignored `.env.local`; `.env.example` documents the required variables. Study features still use local demo data.
 
 ```sh
 cd /Users/p2g/Documents/axiom-revision
@@ -12,7 +14,7 @@ pnpm install
 pnpm dev
 ```
 
-Open http://127.0.0.1:3000/dashboard/ for the workspace or http://127.0.0.1:3000/ for the landing page. `pnpm dev` starts Next.js on loopback. The production build exports to `out/`; serve that directory using any static HTTP server. `next start` is not used with a static export.
+Open http://127.0.0.1:3000/dashboard/ for the workspace or http://127.0.0.1:3000/ for the landing page. `pnpm dev` starts Next.js on loopback. The app now builds for a Next.js server so Supabase session refresh can run. Use `pnpm build` and `pnpm start` for production locally. See `SUPABASE.md` for hosting requirements; the older published Sites preview remains static.
 
 ```sh
 pnpm typecheck
@@ -63,7 +65,7 @@ The current static route set is enumerated in `src/app/[...path]/page.tsx`. `/pr
 
 ### Backend integration later
 
-1. Remove `output: 'export'` when adding server routes. Add a repository adapter behind the provider rather than coupling UI components to Supabase.
+1. Server mode and the Supabase session proxy are configured. Add a repository adapter behind the provider rather than coupling UI components to Supabase.
 2. Configure server-only Supabase credentials. Provision users from authenticated identity. Run the reviewed migration, never from client startup.
 3. Move question solutions and scoring behind a trusted API. The optional schema keeps solutions separate and provides no browser read policy for them; students can read only their own attempt records. Session and scoring writes are intentionally restricted to trusted services.
 4. Apply input validation, ownership checks, transactional submission and replay/expiry protection on that API before competition. The browser demo is intentionally inspectable and provides no anti-cheat guarantees.

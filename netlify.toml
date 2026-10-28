@@ -1,0 +1,10 @@
+[build]
+  command = "pnpm build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "24"
+  PNPM_FLAGS = "--shamefully-hoist"
+
+# Netlify automatically supplies the current OpenNext adapter.
+# No SPA catch-all redirect: it would bypass server routes and authentication.
