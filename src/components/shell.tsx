@@ -26,6 +26,7 @@ import { useDemo } from './provider';
 import { questions } from '@/data/questions';
 import { progression } from '@/domain/progression';
 import { RankBadge } from './progression';
+import { createClient } from '@/utils/supabase/client';
 const learning = [
   { href: '/dashboard', label: 'Overview', icon: LayoutDashboard },
   { href: '/practice', label: 'Practice', icon: BookOpen },
@@ -37,7 +38,7 @@ const explore = [
   { href: '/question-bank', label: 'Question bank', icon: Library },
   { href: '/resources', label: 'Resources', icon: BookOpen },
   { href: '/ai-tutor', label: 'AI tutor', icon: Sparkles },
-  { href: '/ranked', label: 'Ranked', icon: Swords },
+  { href: '/arena', label: 'Arena', icon: Swords },
   { href: '/leaderboard', label: 'Leaderboard', icon: Trophy },
 ];
 export function Brand() {
@@ -127,6 +128,22 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="sidebar-bottom">
+          <button
+            className="nav-item"
+            onClick={async () => {
+              if (!confirm('Sign out? Wait for cloud saving to finish first.')) return;
+              const { error } = await createClient().auth.signOut();
+              if (error) {
+                notify('Unable to sign out. Please retry.');
+                return;
+              }
+              // Reset the previous student's in-memory workspace on logout.
+              // eslint-disable-next-line @next/next/no-location-assign-relative-destination
+              window.location.assign('/login/');
+            }}
+          >
+            Sign out
+          </button>
           <div className="journey-card">
             <span className="journey-star">
               <Sparkles size={17} />
@@ -146,7 +163,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
             <span className="avatar">{state.profile.name.slice(0, 1)}</span>
             <span>
               {state.profile.name}
-              <small>Local demo account</small>
+              <small>Student account</small>
             </span>
             <ChevronDown size={14} />
           </Link>
@@ -238,7 +255,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
               All progress starts with a single question.
             </span>
             <span>
-              Demo workspace <span>·</span> Saved on this device
+              Student workspace <span>·</span> Cloud progress
             </span>
           </footer>
         </main>

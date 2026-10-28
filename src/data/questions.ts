@@ -309,7 +309,8 @@ const seeds: Seed[] = [
 export const questions: Question[] = seeds.map((q) => ({
   ...q,
   source: 'Stem Studios original · demo collection',
-  verified: true,
+  // Public demo fixtures have no independent approval records.
+  verified: false,
   tags: [q.topic, q.subtopic],
   version: 1,
 }));

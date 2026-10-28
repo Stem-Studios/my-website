@@ -28,7 +28,7 @@ export function Landing({ features = false }: { features?: boolean }) {
           <Link href="/features">The platform</Link>
           <Link href="/resources">Resources</Link>
           <Link href="/dashboard">
-            Explore demo
+            Open workspace
             <ArrowUpRight size={14} />
           </Link>
         </nav>
@@ -65,14 +65,14 @@ export function Landing({ features = false }: { features?: boolean }) {
               <ArrowRight size={17} />
             </Link>
             <Link href="/dashboard" className="button button-ghost">
-              Explore the demo
+              Open your workspace
               <ArrowUpRight size={16} />
             </Link>
           </div>
           <div className="landing-proof">
             <span>
               <Check size={13} />
-              No account needed
+              Your own account
             </span>
             <span>
               <Check size={13} />

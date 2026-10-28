@@ -9,12 +9,16 @@ import { QuestionBank } from '@/features/question-bank';
 import { Analytics } from '@/features/analytics';
 import { Resources } from '@/features/resources';
 import { Tutor } from '@/features/tutor';
-import { Settings, Competitive } from '@/features/account';
-import { Landing, DemoLogin } from '@/features/landing';
+import { Settings } from '@/features/account';
+import { Landing } from '@/features/landing';
+import { AuthForm } from '@/features/auth';
+import { Arena, LiveLeaderboard } from '@/features/arena';
 export function WorkspacePage({ path }: { path: string }) {
   const { ready } = useDemo();
   if (path === 'features') return <Landing features />;
-  if (path === 'login' || path === 'signup') return <DemoLogin signup={path === 'signup'} />;
+  if (path === 'login' || path === 'signup') return <AuthForm mode={path} />;
+  if (path === 'reset-password') return <AuthForm mode="reset" />;
+  if (path === 'update-password') return <AuthForm mode="recovery" />;
   const screen = () => {
     switch (path) {
       case 'dashboard':
@@ -45,9 +49,10 @@ export function WorkspacePage({ path }: { path: string }) {
       case 'settings':
         return <Settings />;
       case 'ranked':
-        return <Competitive />;
+      case 'arena':
+        return <Arena />;
       case 'leaderboard':
-        return <Competitive leaderboard />;
+        return <LiveLeaderboard />;
       default:
         return <Dashboard />;
     }

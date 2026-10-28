@@ -1,4 +1,164 @@
 /* Warm study identity. Shared tokens and components apply to every route. */
+.arena-lobby-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin: 24px 0;
+}
+.arena-lobby-grid label,
+.arena-lobby-grid button,
+.arena-lobby-grid p {
+  margin-top: 18px;
+}
+.arena-check {
+  flex-direction: row;
+  align-items: center;
+}
+.arena-history,
+.arena-match {
+  padding: 28px;
+  margin: 24px 0;
+}
+.arena-history > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+}
+.arena-versus {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 48px;
+  position: relative;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 24px;
+}
+.arena-versus > span {
+  position: absolute;
+  left: 50%;
+  top: 24px;
+  transform: translateX(-50%);
+  color: var(--accent);
+  font-weight: 800;
+}
+.arena-versus h2 {
+  margin: 10px 0;
+  font-size: 17px;
+}
+.arena-versus .meter {
+  margin: 12px 0 6px;
+}
+.arena-ready,
+.arena-result,
+.arena-countdown {
+  text-align: center;
+  padding: 42px 15px;
+}
+.arena-ready > strong {
+  display: block;
+  font-size: 36px;
+  letter-spacing: 6px;
+  margin: 15px 0;
+}
+.arena-ready p,
+.arena-result p {
+  margin: 16px 0;
+  color: var(--muted);
+}
+.arena-result > svg {
+  margin: auto;
+  color: var(--accent);
+}
+.arena-countdown strong {
+  font-size: 90px;
+  color: var(--accent);
+}
+.arena-race {
+  padding: 24px 0;
+}
+.arena-race-heading {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  color: var(--accent);
+}
+.arena-race h2 {
+  font-size: 22px;
+  line-height: 1.6;
+  margin: 15px 0;
+}
+.arena-search {
+  display: grid;
+  gap: 12px;
+  padding: 20px 0;
+}
+.arena-search > span {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--border);
+  border-top-color: var(--accent);
+  animation: arena-spin 0.8s linear infinite;
+}
+@keyframes arena-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 700px) {
+  .arena-lobby-grid {
+    grid-template-columns: 1fr;
+  }
+  .arena-match {
+    padding: 18px;
+  }
+  .arena-versus {
+    gap: 32px;
+  }
+  .arena-history > div {
+    flex-wrap: wrap;
+  }
+  .arena-race h2 {
+    font-size: 18px;
+  }
+}
+.account-auth-form {
+  display: grid;
+  gap: 16px;
+  margin: 24px 0;
+  text-align: left;
+}
+.auth-panel .account-auth-form {
+  width: 100%;
+}
+.auth-panel .account-auth-form input {
+  width: 100%;
+}
+.account-auth-form p {
+  font-size: 12px;
+}
+.cloud-status,
+.cloud-error {
+  position: fixed;
+  bottom: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 18px;
+  background: #fff6e9;
+  color: #81491e;
+  border: 1px solid #e5c79f;
+  border-radius: 10px;
+  z-index: 100;
+  max-width: 90vw;
+  font-size: 12px;
+}
+.cloud-error {
+  bottom: 20px;
+  background: #fff0ea;
+  color: #873d24;
+}
 .milestones {
   display: flex;
   gap: 10px;

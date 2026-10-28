@@ -15,6 +15,16 @@ export async function updateSession(request: NextRequest) {
       },
     },
   });
-  await supabase.auth.getClaims();
+  const { data } = await supabase.auth.getClaims();
+  const path = request.nextUrl.pathname;
+  const publicRoute =
+    path === '/' || /^\/(features|login|signup|reset-password|auth)(\/|$)/.test(path);
+  if (!data?.claims && !publicRoute && !path.startsWith('/api/')) {
+    const redirect = NextResponse.redirect(new URL('/login/', request.url));
+    response.cookies.getAll().forEach((cookie) => redirect.cookies.set(cookie));
+    redirect.headers.set('Cache-Control', 'private, no-store');
+    return redirect;
+  }
+  if (data?.claims) response.headers.set('Cache-Control', 'private, no-store');
   return response;
 }

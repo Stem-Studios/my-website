@@ -11,7 +11,15 @@ export async function GET(request: NextRequest) {
     const supabase = await createClient();
     const { error } = await supabase.auth.exchangeCodeForSession(code);
     if (!error) {
-      const response = NextResponse.redirect(new URL('/dashboard/', request.url), 303);
+      const response = NextResponse.redirect(
+        new URL(
+          request.nextUrl.searchParams.get('recovery') === '1'
+            ? '/update-password/'
+            : '/dashboard/',
+          request.url,
+        ),
+        303,
+      );
       response.headers.set('Cache-Control', 'private, no-store');
       return response;
     }

@@ -140,8 +140,8 @@ export function QuestionBank() {
             <div className="bank-question-bottom">
               <Badge tone={q.difficulty === 'Challenge' ? 'amber' : 'purple'}>{q.difficulty}</Badge>
               <span>
-                <Check size={12} />
-                Original · reviewed
+                {q.verified && <Check size={12} />}
+                Original · {q.verified ? 'Independently reviewed' : 'Review pending'}
               </span>
               <Button
                 variant="ghost"
@@ -164,8 +164,8 @@ export function QuestionBank() {
       <div className="content-note">
         <SlidersHorizontal size={16} />
         <p>
-          Every question in this collection is original and includes reviewed answers, progressive
-          hints and a worked solution.
+          Original practice questions with progressive hints and worked solutions. Independent
+          review is pending.
         </p>
       </div>
     </>

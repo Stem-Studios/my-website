@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { profileSchema, type DemoState } from '@/domain/types';
 import { initialState } from '@/data/demo';
 export const STORAGE_KEY = 'axiom-demo-v1';
-const persistedSchema = z.object({
+export const persistedSchema = z.object({
   version: z.literal(1),
   profile: profileSchema,
   onboarded: z.boolean(),

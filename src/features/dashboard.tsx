@@ -30,26 +30,31 @@ import {
 import { motion } from 'motion/react';
 import { useDemo } from '@/components/provider';
 import { Badge, Meter, PanelHeading, PageHeading } from '@/components/shared';
-import { sampleTopics, sampleTrend } from '@/data/demo';
 import { score, revisionStreak } from '@/domain/learning';
-import {
-  RankCard,
-  DailyGoals,
-  Leaderboard,
-  RecentActivity,
-  MobileRankSummary,
-} from '@/components/progression';
+import { mastery } from '@/domain/learning';
+import { questions } from '@/data/questions';
+import { LiveLeaderboard } from '@/features/arena';
+import { RankCard, DailyGoals, RecentActivity, MobileRankSummary } from '@/components/progression';
 export function PerformanceChart({ compact = false }: { compact?: boolean }) {
   const { state } = useDemo();
   const [period, setPeriod] = useState('8 weeks');
-  const data = period === '4 weeks' ? sampleTrend.slice(-4) : sampleTrend;
+  const grouped = new Map<string, { correct: number; total: number }>();
+  state.attempts.forEach((a) => {
+    const day = a.date.slice(0, 10);
+    const previous = grouped.get(day) ?? { correct: 0, total: 0 };
+    grouped.set(day, { correct: previous.correct + Number(a.correct), total: previous.total + 1 });
+  });
+  const data = [...grouped.entries()]
+    .sort(([a], [b]) => a.localeCompare(b))
+    .slice(period === '4 weeks' ? -28 : -56)
+    .map(([week, v]) => ({ week, accuracy: Math.round((v.correct / v.total) * 100) }));
   return (
     <section className={`panel performance-panel ${compact ? 'compact' : ''}`}>
       <PanelHeading title="The work is working." subtitle="Your practice accuracy, over time" />
       <div className="chart-controls">
         <div className="chart-legend">
           <span />
-          Practice accuracy <Badge tone="muted">Sample data</Badge>
+          Practice accuracy <Badge tone="muted">Your answers</Badge>
         </div>
         <select
           aria-label="Chart period"
@@ -128,6 +133,13 @@ export function Dashboard() {
     Math.ceil((new Date(state.profile.examDate).getTime() - today) / 86400000),
   );
   const tasks = state.tasks.slice(0, 3);
+  const topicStats = [
+    ...new Set(questions.filter((q) => q.exam === state.profile.exam).map((q) => q.topic)),
+  ].map((topic) => ({
+    topic,
+    percent: mastery(topic, state.attempts, questions).percent,
+    color: 'var(--accent)',
+  }));
   const stats = [
     {
       label: 'Questions answered',
@@ -323,7 +335,7 @@ export function Dashboard() {
         </div>
         <aside className="dashboard-secondary">
           <RankCard />
-          <Leaderboard compact />
+          <LiveLeaderboard compact />
           <section className="panel journey-panel">
             <PanelHeading title="The bigger picture" />
             <div className="journey-caption">YOUR {state.profile.exam} JOURNEY</div>
@@ -338,7 +350,7 @@ export function Dashboard() {
                   stroke="url(#ring-gradient)"
                   strokeWidth="9"
                   strokeLinecap="round"
-                  strokeDasharray="326 459"
+                  strokeDasharray={`${actual.accuracy * 4.59} 459`}
                   transform="rotate(-90 90 90)"
                 />
                 <defs>
@@ -350,15 +362,16 @@ export function Dashboard() {
               </svg>
               <div>
                 <strong>
-                  71<span>%</span>
+                  {actual.accuracy}
+                  <span>%</span>
                 </strong>
-                <p>Practice readiness</p>
+                <p>Practice accuracy</p>
                 <span className="positive">
-                  <TrendingUp size={12} /> +8% this month
+                  <TrendingUp size={12} /> {answered} questions answered
                 </span>
               </div>
             </div>
-            <p className="readiness-note">Sample indicator · not an exam score</p>
+            <p className="readiness-note">Your raw practice accuracy · not an exam score</p>
             <div className="journey-target">
               <span>
                 <Target size={16} />
@@ -387,9 +400,9 @@ export function Dashboard() {
           <section className="panel mastery-panel">
             <PanelHeading title="Know your strengths" href="/analytics" label="" />
             <p className="panel-description">
-              Topic snapshot <span>·</span> Sample data
+              Topic estimates <span>·</span> Limited evidence until more answers
             </p>
-            {sampleTopics.map((t) => (
+            {topicStats.map((t) => (
               <div className="mastery-row" key={t.topic}>
                 <div>
                   <span>{t.topic}</span>
@@ -400,9 +413,7 @@ export function Dashboard() {
             ))}
             <div className="priority-note">
               <Zap size={15} />
-              <p>
-                A little extra attention to <strong>logic & proof</strong> could go a long way.
-              </p>
+              <p>Topic estimates improve as you answer more questions.</p>
             </div>
           </section>
           <section className="tutor-callout">

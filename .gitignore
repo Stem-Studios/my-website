@@ -1,6 +1,10 @@
 node_modules/
 .next/
 .netlify/
+supabase/.temp/
+supabase/.branches/
+# Private draft questions, answer keys, reviews and generated SQL. Back up securely.
+arena-content/
 out/
 *.tsbuildinfo
 .env*

@@ -8,6 +8,7 @@ import { progression } from '@/domain/progression';
 import { initialState } from '@/data/demo';
 import { Badge, PageHeading } from '@/components/shared';
 import { Button } from '@/components/ui/button';
+import { StudentIdentity } from '@/features/student-identity';
 export function Settings({ profile = false }: { profile?: boolean }) {
   const { state, setState, notify } = useDemo();
   const [confirm, setConfirm] = useState(false);
@@ -33,13 +34,14 @@ export function Settings({ profile = false }: { profile?: boolean }) {
             : 'Thoughtful defaults. Space to make them your own.'
         }
       />
+      <StudentIdentity />
       <div className="settings-layout">
         <section className="panel settings-panel">
           <div className="profile-banner">
             <span className="avatar large-avatar">{state.profile.name[0]}</span>
             <div>
               <h2>{state.profile.name}</h2>
-              <p>Local demo account · {state.profile.exam}</p>
+              <p>Student account · {state.profile.exam}</p>
             </div>
             <Badge>
               {progress.rank.name} · {progress.xp} XP
@@ -76,7 +78,7 @@ export function Settings({ profile = false }: { profile?: boolean }) {
           <div className="setting-row">
             <div>
               <h3>Take your progress with you</h3>
-              <p>Download a JSON copy of your local workspace.</p>
+              <p>Download a JSON backup of your workspace.</p>
             </div>
             <Button variant="outline" onClick={download}>
               <Download size={15} />
@@ -86,10 +88,10 @@ export function Settings({ profile = false }: { profile?: boolean }) {
           <div className="setting-row">
             <div>
               <h3>Start fresh</h3>
-              <p>Reset all attempts, plans and personal resources on this device.</p>
+              <p>Reset your account workspace. Export a backup first.</p>
             </div>
             <Button variant="outline" onClick={() => setConfirm(true)}>
-              Reset demo
+              Reset workspace
             </Button>
           </div>
         </section>
@@ -97,12 +99,12 @@ export function Settings({ profile = false }: { profile?: boolean }) {
           <ShieldCheck size={27} />
           <h2>Your own space.</h2>
           <p>
-            No sign-in or external service is required. Progress stays in this browser’s local
-            storage. Clearing browser data removes it.
+            Your signed-in workspace is saved privately to Supabase. Watch for the cloud-saving
+            indicator before leaving.
           </p>
           <p>
-            There is no cloud backup, real authentication or secure competitive scoring in this
-            demo.
+            A save conflict pauses syncing to protect changes on another device. Export your current
+            workspace before reloading.
           </p>
         </aside>
       </div>
@@ -111,8 +113,8 @@ export function Settings({ profile = false }: { profile?: boolean }) {
           <section className="modal" role="dialog" aria-modal="true" aria-label="Reset local demo">
             <h2>A fresh starting point?</h2>
             <p>
-              This clears your answers, bookmarks, resources and customised plan from this browser.
-              Export first if you’d like to keep a copy.
+              This clears your account’s answers, bookmarks, resources and customised plan. Export
+              first if you’d like to keep a copy.
             </p>
             <div className="form-actions">
               <Button variant="outline" onClick={() => setConfirm(false)}>
@@ -122,10 +124,10 @@ export function Settings({ profile = false }: { profile?: boolean }) {
                 onClick={() => {
                   setState(initialState());
                   setConfirm(false);
-                  notify('Demo reset. A fresh start awaits.');
+                  notify('Workspace reset. A fresh start awaits.');
                 }}
               >
-                Reset local data
+                Reset account workspace
               </Button>
             </div>
           </section>
